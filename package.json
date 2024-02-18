@@ -1,0 +1,7 @@
+{
+  "name": "node-zod",
+  "version": "1.0.0",
+  "description": "leanring node with typescript and using zod",
+  "main": "index.js",
+  "license": "MIT"
+}
