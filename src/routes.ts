@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import { createUserHandler } from "./controller/user.comtroller";
-import { createUserSchema } from "./controller/schema/user.schema";
+import { createUserSchema } from "./schema/user.schema";
 import validateResource from "./middleware/validateResource";
 
 function routes(app: Express) {

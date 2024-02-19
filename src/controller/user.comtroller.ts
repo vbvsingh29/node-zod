@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import logger from "../utlis/logger";
 import { createUser } from "../service/user.service";
-import { CreateUserInput } from "./schema/user.schema";
+import { CreateUserInput } from "../schema/user.schema";
 import { omit } from "lodash";
 
 export async function createUserHandler(
