@@ -10,7 +10,6 @@ export async function createUserHandler(
 ) {
   try {
     const user = await createUser(req.body);
-    logger.info(user);
     return res.status(201).send({
       status: true,
       message: "DONE",
