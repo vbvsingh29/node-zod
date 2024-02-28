@@ -13,7 +13,7 @@ export async function createUserHandler(
     return res.status(201).send({
       status: true,
       message: "DONE",
-      data: omit(user.toJSON(),"password"),
+      data: user.toJSON(),
     });
   } catch (err: any) {
     logger.error(err);

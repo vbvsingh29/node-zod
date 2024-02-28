@@ -3,13 +3,13 @@ import bcrypt from "bcrypt";
 import config from "config";
 import { UserDocuemnt } from "./user.model";
 
-export interface SchemaInput {
+export interface SessionInput {
   user: UserDocuemnt["_id"];
   valid: boolean;
   userAgent: string;
 }
 
-export interface SchemaDocuemnt extends SchemaInput, mongoose.Document {
+export interface SessionDocuemnt extends SessionInput, mongoose.Document {
   user: UserDocuemnt["_id"];
   valid: boolean;
   userAgent: string;
