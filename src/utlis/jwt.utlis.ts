@@ -21,7 +21,6 @@ export function verifyJwt(token: string) {
       decoded,
     };
   } catch (err: any) {
-
     return {
       valid: false,
       expired: err.message === "JWT Expired",
