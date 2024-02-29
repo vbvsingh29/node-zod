@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import logger from "../utlis/logger";
 import { createUser } from "../service/user.service";
 import { CreateUserInput } from "../schema/user.schema";
-import { omit } from "lodash";
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput["body"]>,
@@ -13,7 +12,7 @@ export async function createUserHandler(
     return res.status(201).send({
       status: true,
       message: "DONE",
-      data: omit(user.toJSON(),"password"),
+      data: user,
     });
   } catch (err: any) {
     logger.error(err);

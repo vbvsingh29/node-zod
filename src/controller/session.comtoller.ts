@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
 import { validatePassword } from "../service/user.service";
-import { createSession, findSessions } from "../service/session.service";
+import {
+  createSession,
+  findSessions,
+  updateSession,
+} from "../service/session.service";
 import { signJwt } from "../utlis/jwt.utlis";
 import config from "config";
+import logger from "../utlis/logger";
 
 export async function createUserSessionHandler(req: Request, res: Response) {
   // Validate user password
@@ -33,11 +38,32 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   return res.status(200).send({ accessToken, refreshToken });
 }
 
-export async function getUserSessionHandler(req: Request, res: Response) {
-  const userId = res.locals.user._id;
+export async function getUserSessionsHandlerrr(req: Request, res: Response) {
+  try {
 
-  const sessions = await findSessions({ user: userId, valid: true });
-  console.log({ sessions });
+    const userId = res.locals.user._id;
 
-  return res.send({ sessions });
+    const sessions = await findSessions({
+      user: userId,
+      valid: true,
+    });
+
+    return res.status(200).send({sessions});
+  } catch (err: any) {
+    logger.error(err, "catch error");
+    return res.status(500).send({
+      message: err.message,
+    });
+  }
+}
+
+export async function deleteSessionHandler(req: Request, res: Response) {
+  const sessionId = res.locals.user.session;
+
+  await updateSession({ _id: sessionId }, { valid: false });
+
+  return res.send({
+    accessToken: null,
+    refreshToken: null,
+  });
 }
