@@ -40,17 +40,15 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
 export async function getUserSessionsHandlerrr(req: Request, res: Response) {
   try {
-    console.log("inside");
 
     const userId = res.locals.user._id;
-    console.log(userId);
 
-    const sess = await findSessions({
+    const sessions = await findSessions({
       user: userId,
       valid: true,
     });
-    console.log({ sess }, "dasfdadsds");
-    return res.write("true");
+
+    return res.status(200).send({sessions});
   } catch (err: any) {
     logger.error(err, "catch error");
     return res.status(500).send({

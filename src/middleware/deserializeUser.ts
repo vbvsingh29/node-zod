@@ -9,14 +9,15 @@ const deserializeUser = async (
   next: NextFunction
 ) => {
   try {
-    const accessToken = get(req, "headers.authorization", "");
-
+    const accessToken = get(req, "headers.authorization", "").replace(
+      /^Bearer\s/,
+      ""
+    );
     const refreshTokenHeader = get(req, "headers.x-refresh");
 
     let refreshToken: string | undefined;
     if (Array.isArray(refreshTokenHeader)) {
-      // Handle the case where refreshTokenHeader is an array
-      refreshToken = refreshTokenHeader[0]; // Assuming you want to use the first element
+      refreshToken = refreshTokenHeader[0];
     } else {
       refreshToken = refreshTokenHeader;
     }
@@ -28,9 +29,8 @@ const deserializeUser = async (
 
     if (decoded) {
       res.locals.user = decoded;
-      next();
+      return next();
     }
-
     if (expired && refreshToken) {
       const newAccessToken = await reIssueAccessToken({ refreshToken });
 
@@ -42,7 +42,6 @@ const deserializeUser = async (
       }
       return next();
     }
-
     return next();
   } catch (err: any) {
     return res.status(500).send({
