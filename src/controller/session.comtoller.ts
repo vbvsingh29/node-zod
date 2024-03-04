@@ -38,7 +38,7 @@ export async function createUserSessionHandler(req: Request, res: Response) {
   return res.status(200).send({ accessToken, refreshToken });
 }
 
-export async function getUserSessionsHandlerrr(req: Request, res: Response) {
+export async function getUserSessionsHandler(req: Request, res: Response) {
   try {
 
     const userId = res.locals.user._id;

@@ -10,9 +10,9 @@ const validateResource =
         params: req.params,
       });
       next();
-    } catch (e:any) {
-        res.status(500).send(e.errors);
+    } catch (e: any) {
+      res.status(500).send(e.errors);
     }
   };
 
-  export default validateResource;
+export default validateResource;
