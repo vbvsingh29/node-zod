@@ -30,3 +30,10 @@ export const expectedPayload = {
   updatedAt: expect.any(String),
   user: expect.any(String),
 };
+
+export const userInput = {
+  email: "Testing@gmail.com",
+  name: "Testing Tests",
+  password: "Admin@123",
+  passwordConfirmation: "Admin@123",
+};
