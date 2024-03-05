@@ -5,10 +5,22 @@ import validateResource from "./middleware/validateResource";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
-  getUserSessionsHandlerrr,
+  getUserSessionsHandler,
 } from "./controller/session.comtoller";
 import { createSessionSchema } from "./schema/session.schema";
 import requireUser from "./middleware/requireUser";
+import {
+  createProductSchema,
+  deleteProductScehma,
+  getProductScehma,
+  updateProductScehma,
+} from "./schema/product.schema";
+import {
+  createProductHandler,
+  deleteProductHandler,
+  getProductHandler,
+  updateProductHandler,
+} from "./controller/product.controller";
 
 function routes(app: Express) {
   app.get("/healthcheck", (req: Request, res: Response) =>
@@ -23,8 +35,29 @@ function routes(app: Express) {
     createUserSessionHandler
   );
 
-  app.get("/api/sessions", requireUser, getUserSessionsHandlerrr);
+  app.get("/api/sessions", requireUser, getUserSessionsHandler);
   app.delete("/api/sessions", requireUser, deleteSessionHandler);
+
+  app.post(
+    "/api/products",
+    [requireUser, validateResource(createProductSchema)],
+    createProductHandler
+  );
+  app.put(
+    "/api/products/:productId",
+    [requireUser, validateResource(updateProductScehma)],
+    updateProductHandler
+  );
+  app.get(
+    "/api/products/:productId",
+    [validateResource(getProductScehma)],
+    getProductHandler
+  );
+  app.delete(
+    "/api/products/:productId",
+    [requireUser, validateResource(deleteProductScehma)],
+    deleteProductHandler
+  );
 }
 
 export default routes;
