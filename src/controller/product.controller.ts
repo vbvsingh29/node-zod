@@ -78,7 +78,7 @@ export async function updateProductHandler(
         message: "Product Not Found",
       });
     }
-    console.log(product, userId);
+
     if (String(product.user) !== userId) {
       return res.status(403).send({
         status: false,

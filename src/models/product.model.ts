@@ -15,6 +15,7 @@ export interface ProductInput {
 export interface ProductDocuemnt extends ProductInput, mongoose.Document {
   user: UserDocuemnt["_id"];
   title: string;
+  productId: string;
   description: string;
   price: number;
   image: string;
