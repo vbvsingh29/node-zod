@@ -13,7 +13,7 @@ export const productPayload = {
 
 export const userPayload = {
   _id: userId,
-  email: "testing@gmail.com",
+  email: "user@gmail.com",
   name: "Testing Tests",
 };
 
@@ -32,8 +32,18 @@ export const expectedPayload = {
 };
 
 export const userInput = {
-  email: "Testing@gmail.com",
+  email: "testing@gmail.com",
   name: "Testing Tests",
   password: "Admin@123",
   passwordConfirmation: "Admin@123",
+};
+
+export const sessionPayload = {
+  _id: userId,
+  user: userId,
+  valid: true,
+  userAgent: "PostmanRuntime/7.36.1",
+  createdAt: new Date("2024-02-28T07:13:32.291Z"),
+  updatedAt: new Date("2024-02-28T07:13:32.291Z"),
+  __v: 0,
 };

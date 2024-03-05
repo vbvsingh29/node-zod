@@ -35,12 +35,11 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     { expiresIn: config.get("refreshTokenTtl") } // 1y
   );
   // Return access and refresh token
-  return res.status(200).send({ accessToken, refreshToken });
+  return res.status(200).send({ status: true, accessToken, refreshToken });
 }
 
 export async function getUserSessionsHandler(req: Request, res: Response) {
   try {
-
     const userId = res.locals.user._id;
 
     const sessions = await findSessions({
@@ -48,7 +47,7 @@ export async function getUserSessionsHandler(req: Request, res: Response) {
       valid: true,
     });
 
-    return res.status(200).send({sessions});
+    return res.status(200).send({ sessions });
   } catch (err: any) {
     logger.error(err, "catch error");
     return res.status(500).send({

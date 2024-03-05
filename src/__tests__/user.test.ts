@@ -1,7 +1,9 @@
 import * as UserService from "../service/user.service";
+import * as SessionService from "../service/session.service";
 import supertest from "supertest";
-import { userInput, userPayload } from "./constants/payload";
+import { sessionPayload, userInput, userPayload } from "./constants/payload";
 import createServer from "../utlis/server";
+import { createUserSessionHandler } from "../controller/session.comtoller";
 
 const app = createServer();
 describe("user", () => {
@@ -48,7 +50,7 @@ describe("user", () => {
     });
 
     describe("given the user service throw", () => {
-      it("shpuld handle error and return 409", async () => {
+      it("shpuld handle error and return 500", async () => {
         const craeteUserServiceMock = jest
           .spyOn(UserService, "createUser")
           // @ts-ignore
@@ -68,7 +70,39 @@ describe("user", () => {
   describe("craete user session", () => {
     describe("given username and password valid", () => {
       it("should retien access and refresh token ", async () => {
-        
+        jest
+          .spyOn(UserService, "validatePassword")
+          // @ts-ignore
+          .mockReturnValue(userPayload);
+
+        jest
+          .spyOn(SessionService, "createSession")
+          // @ts-ignore
+          .mockReturnValue(sessionPayload);
+
+        const req = {
+          get: () => {
+            return "a user agent";
+          },
+          body: {
+            email: "testing@gmail.com",
+            password: "Admin@123",
+          },
+        };
+
+        const send = jest.fn();
+        const status = jest.fn().mockReturnThis();
+        const res = { send, status };
+
+        // @ts-ignore
+        await createUserSessionHandler(req, res);
+
+        expect(status).toHaveBeenCalledWith(200);
+        expect(send).toHaveBeenCalledWith({
+          status: true,
+          accessToken: expect.any(String),
+          refreshToken: expect.any(String),
+        });
       });
     });
   });

@@ -34,7 +34,6 @@ describe("product", () => {
     describe("given producct does Exist", () => {
       it("should return 200 and Product", async () => {
         const product = await createProduct(productPayload);
-        const productId = "product-123";
         const { body, statusCode } = await supertest(app).get(
           `/api/products/${product.productId}`
         );
