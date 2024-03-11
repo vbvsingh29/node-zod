@@ -3,15 +3,39 @@ import ProductModel, {
   ProductDocuemnt,
   ProductInput,
 } from "../models/product.model";
+import { databaseResponseTimeHistogram } from "../utlis/metrics";
 
 export async function createProduct(input: ProductInput) {
-  return ProductModel.create(input);
+  const metricsLabel = {
+    operation: "createProduct",
+  };
+  const timer = databaseResponseTimeHistogram.startTimer();
+  try {
+    const result = await ProductModel.create(input);
+    timer({ ...metricsLabel, success: "true" });
+    return result;
+  } catch (error: any) {
+    timer({ ...metricsLabel, success: "false" });
+    throw new Error(error.message);
+  }
 }
 export async function findProduct(
   query: FilterQuery<ProductDocuemnt>,
   options: QueryOptions = { lean: true }
 ) {
-  return ProductModel.findOne(query, {}, options);
+  const metricsLabel = {
+    operation: "findProduct",
+  };
+  const timer = databaseResponseTimeHistogram.startTimer();
+
+  try {
+    const result = await ProductModel.findOne(query, {}, options);
+    timer({ ...metricsLabel, success: "true" });
+    return result;
+  } catch (error: any) {
+    timer({ ...metricsLabel, success: "false" });
+    throw new Error(error.message);
+  }
 }
 export async function findAndUpdateProduct(
   query: FilterQuery<ProductDocuemnt>,

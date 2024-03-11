@@ -33,6 +33,7 @@ This is made using yarn as an package manager so make sure you have yarn install
 
 ![](./flow-diagrams/refresh-token-flow.png)
 
+## Google Oauth used
 ## How To Run
 
 - Install all dependicies
