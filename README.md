@@ -1,7 +1,11 @@
 # Build a REST API with Node.js, Mongoose & TypeScript
 
-This is Node Js server with typescript, Rest API using express an middleware and mongoose as ODM with mongoDB and for validation we are zod.
+This is Node Js server with typescript, Rest API using express an middleware and mongoose as ODM with mongoDB and for validation we are zod.ALso have implemented google-Oauth and Express APIs Metrics using prometheus
 This is made using yarn as an package manager so make sure you have yarn installed.Feel free to use npm if you want
+
+## Frontend Repo
+
+The API is fully functional, and you can find the corresponding frontend on GitHub at `https://github.com/vbvsingh29/node-zod-ui`. Additionally, it offers the convenience of logging in via Google OAuth, as this feature has been implemented within the project.
 
 ## Technologies
 
@@ -24,6 +28,9 @@ This is made using yarn as an package manager so make sure you have yarn install
 | `ACCESS_TOKEN_PRIVATE_KEY` | Private Key.                                                |
 | `REFRESH_PUBLIC_KEY`       | Public Key.                                                 |
 | `REFRESH_PRIVATE_KEY`      | Private Key                                                 |
+| `GOOGLE_CLIENT_ID`         | Google Client Id                                            |
+| `GOOGLE_CLIENT_SECRET`     | Google Client Secret                                        |
+| `GOOGLE_AUTH_REDIRECT_URL` | Google Auth Redirect URL                                    |
 
 ## DATA FLOW
 
@@ -34,6 +41,7 @@ This is made using yarn as an package manager so make sure you have yarn install
 ![](./flow-diagrams/refresh-token-flow.png)
 
 ## Google Oauth used
+
 ## How To Run
 
 - Install all dependicies
