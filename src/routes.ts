@@ -1,11 +1,15 @@
 import { Express, Request, Response } from "express";
-import { createUserHandler } from "./controller/user.comtroller";
+import {
+  createUserHandler,
+  getCurrentUser,
+} from "./controller/user.comtroller";
 import { createUserSchema } from "./schema/user.schema";
 import validateResource from "./middleware/validateResource";
 import {
   createUserSessionHandler,
   deleteSessionHandler,
   getUserSessionsHandler,
+  googleOauthHandler,
 } from "./controller/session.comtoller";
 import { createSessionSchema } from "./schema/session.schema";
 import requireUser from "./middleware/requireUser";
@@ -28,6 +32,7 @@ function routes(app: Express) {
   );
 
   app.post("/api/users", validateResource(createUserSchema), createUserHandler);
+  app.get("/api/me", requireUser, getCurrentUser);
 
   app.post(
     "/api/sessions",
@@ -38,6 +43,7 @@ function routes(app: Express) {
   app.get("/api/sessions", requireUser, getUserSessionsHandler);
   app.delete("/api/sessions", requireUser, deleteSessionHandler);
 
+  app.get("/api/sessions/oauth/google", googleOauthHandler);
   app.post(
     "/api/products",
     [requireUser, validateResource(createProductSchema)],

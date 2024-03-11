@@ -9,11 +9,12 @@ const deserializeUser = async (
   next: NextFunction
 ) => {
   try {
-    const accessToken = get(req, "headers.authorization", "").replace(
-      /^Bearer\s/,
-      ""
-    );
-    const refreshTokenHeader = get(req, "headers.x-refresh");
+    const accessToken =
+      get(req, "cookies.accessToken") ||
+      get(req, "headers.authorization", "").replace(/^Bearer\s/, "");
+      
+    const refreshTokenHeader =
+      get(req, "cookies.refreshToken") || get(req, "headers.x-refresh");
 
     let refreshToken: string | undefined;
     if (Array.isArray(refreshTokenHeader)) {
@@ -35,6 +36,16 @@ const deserializeUser = async (
 
       if (typeof newAccessToken === "string") {
         res.setHeader("x-access-token", newAccessToken);
+
+        res.cookie("accessToken", newAccessToken, {
+          maxAge: 900000,
+          httpOnly: true,
+          domain: "localhost",
+          path: "/",
+          sameSite: "strict",
+          secure: false,
+        });
+
         const result = verifyJwt(newAccessToken);
         res.locals.user = result.decoded;
         return next();

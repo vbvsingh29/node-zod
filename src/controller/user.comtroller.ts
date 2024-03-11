@@ -19,3 +19,12 @@ export async function createUserHandler(
     return res.status(500).send({ message: err.message });
   }
 }
+
+export async function getCurrentUser(req: Request, res: Response) {
+  try {
+    return res.send(res.locals.user);
+  } catch (error: any) {
+    logger.error(error);
+    return res.status(500).send({ message: error.message });
+  }
+}

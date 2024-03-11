@@ -5,7 +5,7 @@ import createServer from "./utlis/server";
 
 const port = config.get<number>("port");
 const app = createServer();
-app.listen(1337, async () => {
+app.listen(port, async () => {
   logger.info(`server is running at http://localhost:${port}`);
 
   await connect();
