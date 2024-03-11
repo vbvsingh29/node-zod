@@ -9,4 +9,7 @@ export default {
   refreshTokenTtl: process.env.REFERSHTOKENTTL,
   publicKey: process.env.ACCESS_TOKEN_PUBLIC_KEY,
   privateKey: process.env.ACCESS_TOKEN_PRIVATE_KEY,
+  googleClient_id: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  googleRedirectUri: process.env.GOOGLE_AUTH_REDIRECT_URL,
 };
