@@ -20,7 +20,7 @@ function createServer() {
   app.use(deserializeUser);
   app.use(
     responseTime((req: Request, res: Response, time: number) => {
-      if (req?.route.path) {
+      if (req?.route?.path) {
         restResponseTimeHistogram.observe(
           {
             methods: req.method,
